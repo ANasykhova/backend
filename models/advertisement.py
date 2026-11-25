@@ -2,8 +2,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class AdvertisementRequest(BaseModel):
-    # strict - без неявных приведений типов ("1" -> 1, "true" -> True)
-    model_config = ConfigDict(strict=True, str_strip_whitespace=True)
+    model_config = ConfigDict(strict=True, str_strip_whitespace=True, extra="forbid")
 
     seller_id: int = Field(gt=0, description="ID продавца")
     is_verified_seller: bool = Field(description="Подтвержден ли продавец")

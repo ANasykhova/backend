@@ -13,6 +13,17 @@ FIELDS = [
 ]
 
 
+def test_predict_rejects_extra_field(client, payload):
+    payload["images_count"] = 2
+
+    response = client.post("/predict", json=payload)
+
+    assert response.status_code == 400
+    error = response.json()["detail"][0]
+    assert error["type"] == "extra_forbidden"
+    assert error["loc"] == ["body", "images_count"]
+
+
 def test_root(client):
     response = client.get("/")
 
